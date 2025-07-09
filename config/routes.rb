@@ -68,6 +68,9 @@ Rails.application.routes.draw do
     resources :ip_pools, controller: "organization_ip_pools" do
       put :assignments, on: :collection
     end
+
+    resources :api_keys, only: [:new, :index, :create, :destroy]
+
     root "servers#index"
     get "settings" => "organizations#edit"
     patch "settings" => "organizations#update"
