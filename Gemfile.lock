@@ -46,6 +46,11 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_model_serializers (0.10.15)
+      actionpack (>= 4.1)
+      activemodel (>= 4.1)
+      case_transform (>= 0.2)
+      jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     activejob (7.0.8.1)
       activesupport (= 7.0.8.1)
       globalid (>= 0.3.6)
@@ -83,6 +88,8 @@ GEM
     bigdecimal (3.1.6)
     bindata (2.5.0)
     builder (3.2.4)
+    case_transform (0.2)
+      activesupport
     chronic (0.10.2)
     coffee-rails (5.0.0)
       coffee-script (>= 2.2.0)
@@ -150,6 +157,7 @@ GEM
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
+    jsonapi-renderer (0.2.2)
     jwt (2.8.1)
       base64
     kaminari (1.2.2)
@@ -396,6 +404,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  active_model_serializers
   annotate
   authie
   autoprefixer-rails
