@@ -1,0 +1,44 @@
+// Flash message styling for API key display
+.flash--notice {
+  background: #f0f9ff;
+  border: 1px solid #0ea5e9;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  
+  strong {
+    display: block;
+    color: #0c4a6e;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  
+  code {
+    display: block;
+    background: #fff;
+    color: #1e40af;
+    padding: 0.875rem 1rem;
+    border-radius: 6px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.875rem;
+    word-break: break-all;
+    border: 1px solid #0ea5e9;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+    overflow-wrap: break-word;
+  }
+  
+  .flash__warning {
+    color: #b71c1c;
+    font-size: 0.875rem;
+    font-style: italic;
+    margin: 0;
+  }
+}
+
+// Additional spacing for the center button
+.u-center {
+  text-align: center;
+  margin-top: 2rem;
+}
