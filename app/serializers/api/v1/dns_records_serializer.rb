@@ -30,7 +30,7 @@ class API::V1::DNSRecordsSerializer
   def spf_record
     {
       type: 'TXT',
-      name: extract_subdomain_from_domain_name,
+      name: '@',
       value: @domain.spf_record,
       status: @domain.spf_status,
       error: @domain.spf_error,
@@ -63,7 +63,7 @@ class API::V1::DNSRecordsSerializer
   def mx_record
     {
       type: 'MX',
-      name: extract_subdomain_from_domain_name,
+      name: '@',
       value: Postal::Config.dns.mx_records,
       priority: 10,
       status: @domain.mx_status,
@@ -83,11 +83,5 @@ class API::V1::DNSRecordsSerializer
       warning_count: statuses.count { |s| s.present? && s != 'OK' && s != 'Missing' },
       missing_count: statuses.count('Missing') + statuses.count(nil)
     }
-  end
-
-  def extract_subdomain_from_domain_name
-    parts = @domain.name.split('.')
-    return parts.first if parts.length > 2
-    '@'
   end
 end
