@@ -1,0 +1,47 @@
+- page_title << "API Keys"
+
+.pageHeader
+  %h1.pageHeader__title
+    %span.pageHeader__titlePrevious
+      = @organization.name
+      &rarr;
+    API Keys
+= render 'organizations/nav', :active_nav => :api_keys
+
+.pageContent.pageContent--compact
+
+  - if flash[:raw_token]
+    .flash.flash--notice
+      %strong Please copy this key and save it somewhere safe.
+      %code= flash[:raw_token]
+      %p.flash__warning For security reasons, we cannot show it to you again
+
+  - if @api_keys.empty?
+    .noData.noData--clean
+      %h2.noData__title There are no API keys for this organization.
+      %p.noData__text
+        API keys allow you to authenticate with the Postal API to manage domains,
+        configure credentials, set up webhooks, and control your mail server programmatically. Add your first key below.
+      %p.noData__button= link_to "Add your first API key", [:new, organization, :api_key], :class => "button button--positive"
+
+  - else
+    %ul.domainList.u-margin
+      - @api_keys.each do |api_key|
+        %li.domainList__item
+          .domainList__details
+            %p.domainList__name= api_key.name
+            %p.domainList__keyDisplay
+              %span.domainList__keyIcon 🔑
+              %span.domainList__keyMask{:title => "For security purposes, we do not allow the key value to be displayed."}  ••••••••••••••••••••
+
+          %ul.domainList__properties
+            %li.domainList__verificationTime
+              Created by #{api_key.user.first_name} on #{api_key.created_at.to_fs(:long)}
+              - if api_key.last_used_at
+                • Last used #{time_ago_in_words(api_key.last_used_at)} ago
+              - else
+                • Never used
+            %li.domainList__links
+              = link_to "Delete", [organization, api_key], :remote => :delete, :method => :delete, :data => {:confirm => "Are you sure you wish to remove this API key?", :disable_with => "Deleting..."}, :class => 'domainList__delete'
+
+    %p.u-center= link_to "Create API Key", [:new, organization, :api_key], :class => "button button--positive"

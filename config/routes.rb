@@ -68,6 +68,9 @@ Rails.application.routes.draw do
     resources :ip_pools, controller: "organization_ip_pools" do
       put :assignments, on: :collection
     end
+
+    resources :api_keys, only: [:new, :index, :create, :destroy]
+
     root "servers#index"
     get "settings" => "organizations#edit"
     patch "settings" => "organizations#update"
@@ -98,6 +101,25 @@ Rails.application.routes.draw do
   get ".well-known/jwks.json" => "well_known#jwks"
 
   get "ip" => "sessions#ip"
+
+  namespace :api do
+    namespace :v1 do
+      scope '/org/:org_permalink/servers/:server_id' do
+        resources :credentials, except: [:new, :edit]
+        resources :webhooks, except: [:new, :edit]
+
+        get '/domains', to: 'domains#index'
+        post '/domains', to: 'domains#create'
+        get '/domains/:domain_name', to: 'domains#show', constraints: { domain_name: /[^\/]+/ }
+        put '/domains/:domain_name', to: 'domains#update', constraints: { domain_name: /[^\/]+/ }
+        patch '/domains/:domain_name', to: 'domains#update', constraints: { domain_name: /[^\/]+/ }
+        delete '/domains/:domain_name', to: 'domains#destroy', constraints: { domain_name: /[^\/]+/ }
+        post '/domains/:domain_name/verify', to: 'domains#verify', constraints: { domain_name: /[^\/]+/ }
+        get '/domains/:domain_name/dns_records', to: 'domains#dns_records', constraints: { domain_name: /[^\/]+/ }
+        post '/domains/:domain_name/check_dns', to: 'domains#check_dns', constraints: { domain_name: /[^\/]+/ }
+      end
+    end
+  end
 
   root "organizations#index"
 end

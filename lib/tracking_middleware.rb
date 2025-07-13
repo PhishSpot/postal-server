@@ -9,6 +9,10 @@ class TrackingMiddleware
   end
 
   def call(env)
+    if env['PATH_INFO'].include?('/api/v1/')
+      return @app.call(env)
+    end
+
     unless env["HTTP_X_POSTAL_TRACK_HOST"].to_i == 1
       return @app.call(env)
     end

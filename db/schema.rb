@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_11_205229) do
+ActiveRecord::Schema[7.0].define(version: 2025_07_09_221056) do
   create_table "additional_route_endpoints", id: :integer, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "route_id"
     t.string "endpoint_type"
@@ -26,6 +26,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_205229) do
     t.datetime "last_used_at", precision: nil
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+  end
+
+  create_table "api_keys", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "organization_id", null: false
+    t.integer "user_id", null: false
+    t.string "uuid"
+    t.string "name"
+    t.string "token_digest"
+    t.datetime "last_used_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "fk_rails_7aab96f30e"
+    t.index ["user_id"], name: "fk_rails_32c28d0dc2"
   end
 
   create_table "authie_sessions", id: :integer, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -380,4 +393,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_11_205229) do
     t.index ["role"], name: "index_worker_roles_on_role", unique: true
   end
 
+  add_foreign_key "api_keys", "organizations"
+  add_foreign_key "api_keys", "users"
 end

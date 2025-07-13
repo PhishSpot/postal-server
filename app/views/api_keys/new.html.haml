@@ -1,0 +1,23 @@
+- page_title << "Create API Key"
+
+.pageHeader
+  %h1.pageHeader__title
+    %span.pageHeader__titlePrevious
+      = @organization.name
+      &rarr; API Keys &rarr;
+    Add new API key
+= render 'organizations/nav', :active_nav => :api_keys
+
+.pageContent.pageContent--compact
+  = form_for [organization, @api_key], :remote => true do |f|
+    = f.error_messages
+    %fieldset.fieldSet
+      .fieldSet__field
+        = f.label :name, 'API Key Name', :class => 'fieldSet__label'
+        .fieldSet__input
+          = f.text_field :name, :autofocus => true, :class => 'input input--text'
+          .fieldSet__text
+            This is a descriptive name for your API key. In the next step, you will receive the actual key to use in your code.
+
+    .fieldSetSubmit
+      = f.submit "Create API Key", :class => "button button--positive js-form-submit"
